@@ -10,10 +10,9 @@ UCLASS()
 class INFINITYFIGHT_API AIF_FloatingPlatform : public AActor
 {
 	GENERATED_BODY()
-	
 
 protected:
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category="Components")
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components")
 	UStaticMeshComponent* Mesh;
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Platform", meta = (MakeEditWidget = "true"))
@@ -27,7 +26,7 @@ private:
 	FVector StartPoint = FVector::ZeroVector;
 	bool bMoving = false;
 
-public:	
+public:
 	AIF_FloatingPlatform();
 	virtual void Tick(float DeltaTime) override;
 

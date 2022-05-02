@@ -1,6 +1,5 @@
 // Copyright Dmitrii Shukaev. All Rights Reserved.
 
-
 #include "Enviroment/IF_FloatingPlatform.h"
 #include "Kismet/KismetMathLibrary.h"
 
@@ -17,7 +16,7 @@ void AIF_FloatingPlatform::BeginPlay()
 	Super::BeginPlay();
 
 	StartPoint = GetActorLocation();
-	EndPoint =  UKismetMathLibrary::TransformLocation(GetActorTransform(), EndPoint);
+	EndPoint = UKismetMathLibrary::TransformLocation(GetActorTransform(), EndPoint);
 	StopPlatform();
 }
 
@@ -49,7 +48,7 @@ void AIF_FloatingPlatform::PlatformMovement(const float DeltaTime)
 void AIF_FloatingPlatform::StopPlatform()
 {
 	bMoving = false;
-	
+
 	FTimerHandle StopTimer;
 	GetWorldTimerManager().SetTimer(StopTimer, this, &AIF_FloatingPlatform::PlatformMovementStart, StopTime, false);
 }
