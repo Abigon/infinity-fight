@@ -5,8 +5,11 @@
 #include "Components/CapsuleComponent.h"
 #include "Camera/CameraComponent.h"
 #include "GameFramework/CharacterMovementComponent.h"
+#include "Player/IF_CharacterMovementComponent.h"
 
-AIF_Character::AIF_Character()
+AIF_Character::AIF_Character(const FObjectInitializer& ObjInit)
+	: Super(ObjInit.SetDefaultSubobjectClass<UIF_CharacterMovementComponent>(ACharacter::CharacterMovementComponentName))
+
 {
 	PrimaryActorTick.bCanEverTick = true;
 

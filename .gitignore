@@ -75,3 +75,4 @@ DerivedDataCache/*
 
 Content/Dev/*
 .idea/*
+*.user

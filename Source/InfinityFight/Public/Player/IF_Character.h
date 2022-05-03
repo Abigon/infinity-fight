@@ -27,10 +27,12 @@ private:
 	bool bSprinting = false;
 
 public:
-	AIF_Character();
+	AIF_Character(const FObjectInitializer& ObjInit);
 	virtual void Tick(float DeltaTime) override;
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 	virtual void Jump() override;
+
+	FORCEINLINE bool IsSprint() const { return bSprinting; }
 
 protected:
 	virtual void BeginPlay() override;
