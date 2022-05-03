@@ -10,7 +10,8 @@ void AIF_GameHUD::BeginPlay()
 
 	GameWidgets.Add(EIFGameState::EGS_InGame, CreateWidget<UUserWidget>(GetWorld(), InGameHUDWidgetClass));
 	GameWidgets.Add(EIFGameState::EGS_Pause, CreateWidget<UUserWidget>(GetWorld(), PauseWidgetClass));
-	GameWidgets.Add(EIFGameState::EGS_EndGame, CreateWidget<UUserWidget>(GetWorld(), EndGameWidgetClass));
+	GameWidgets.Add(EIFGameState::EGS_WinGame, CreateWidget<UUserWidget>(GetWorld(), WinGameWidgetClass));
+	GameWidgets.Add(EIFGameState::EGS_LooseGame, CreateWidget<UUserWidget>(GetWorld(), LooseGameWidgetClass));
 
 	for (const auto GameWidgetPair : GameWidgets)
 	{

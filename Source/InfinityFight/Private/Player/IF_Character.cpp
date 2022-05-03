@@ -38,6 +38,8 @@ AIF_Character::AIF_Character(const FObjectInitializer& ObjInit)
 void AIF_Character::BeginPlay()
 {
 	Super::BeginPlay();
+
+	SetMaxHealth(MaxHealth);
 }
 
 void AIF_Character::Tick(float DeltaTime)
@@ -63,13 +65,13 @@ void AIF_Character::SetupPlayerInputComponent(UInputComponent* PlayerInputCompon
 	PlayerInputComponent->BindAction("Sprint", IE_Pressed, this, &AIF_Character::SprintStart);
 	PlayerInputComponent->BindAction("Sprint", IE_Released, this, &AIF_Character::SprintEnd);
 
-	PlayerInputComponent->BindAction("Attack", IE_Pressed, this, &AIF_Character::AttackStart);
-	PlayerInputComponent->BindAction("Attack", IE_Released, this, &AIF_Character::AttackEnd);
+	PlayerInputComponent->BindAction("Attack", IE_Pressed, this, &AIF_Character::AttackButtonPressed);
+	PlayerInputComponent->BindAction("Attack", IE_Released, this, &AIF_Character::AttackButtonRealise);
 }
 
-bool AIF_Character::CanMove()
+bool AIF_Character::CanMove() const
 {
-	return !bAttacking;
+	return !bAttacking || !IsDead();
 }
 
 void AIF_Character::MoveForward(float Value)
@@ -120,12 +122,64 @@ void AIF_Character::SprintEnd()
 	bSprinting = false;
 }
 
-void AIF_Character::AttackStart()
+void AIF_Character::AttackButtonPressed()
 {
 	bAttacking = true;
 }
 
-void AIF_Character::AttackEnd()
+void AIF_Character::AttackButtonRealise()
 {
 	bAttacking = false;
+}
+
+void AIF_Character::Attack()
+{
+	if (!CanAttack()) return;
+
+	bPlayingCombatMontage = true;
+}
+
+void AIF_Character::AttackEnd()
+{
+	bPlayingCombatMontage = false;
+	if (bAttacking)
+	{
+		Attack();
+	}
+}
+
+bool AIF_Character::CanAttack() const
+{
+	return !bPlayingCombatMontage || !IsDead();
+}
+
+float AIF_Character::TakeDamage(float DamageAmount, FDamageEvent const& DamageEvent, AController* EventInstigator, AActor* DamageCauser)
+{
+	const float TempDamage = Super::TakeDamage(DamageAmount, DamageEvent, EventInstigator, DamageCauser);
+	ChangeHealth(-TempDamage);
+	return TempDamage;
+}
+
+void AIF_Character::ChangeHealth(const float DeltaHealth)
+{
+	Health = FMath::Clamp(Health + DeltaHealth, 0.f, MaxHealth);
+	if (Health <= 0)
+	{
+		Die();
+	}
+}
+
+void AIF_Character::Die()
+{
+	StopAnimMontage();
+	GetCharacterMovement()->DisableMovement();
+	GetCapsuleComponent()->SetCollisionResponseToAllChannels(ECollisionResponse::ECR_Ignore);
+
+	PlayAnimMontage(DeathMontage);
+	OnPlayerDeath.Broadcast();
+}
+
+void AIF_Character::Test()
+{
+	ChangeHealth(-20.f);
 }

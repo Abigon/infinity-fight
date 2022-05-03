@@ -31,9 +31,9 @@ void AIF_PlayerController::SetupInputComponent()
 
 void AIF_PlayerController::OnPauseGame()
 {
-	if (!GetWorld() || !GetWorld()->GetAuthGameMode()) return;
+	if (!GetWorld()) return;
 
-	const auto GameMode = GetWorld()->GetAuthGameMode();
+	const auto GameMode = Cast<AIF_GameMode>(GetWorld()->GetAuthGameMode());
 	if (IsPaused())
 	{
 		GameMode->ClearPause();

@@ -11,6 +11,7 @@ enum class EIFGameState : uint8
 {
 	EGS_InGame UMETA(DisplayName = "InGame"),
 	EGS_Pause UMETA(DisplayName = "Pause"),
-	EGS_EndGame UMETA(DisplayName = "EndGame"),
+	EGS_WinGame UMETA(DisplayName = "WinGame"),
+	EGS_LooseGame UMETA(DisplayName = "LooseGame"),
 	EGS_MAX UMETA(DisplayName = "DefaultMAX")
 };

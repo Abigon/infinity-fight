@@ -28,4 +28,7 @@ private:
 	EIFGameState RFGameState = EIFGameState::EGS_MAX;
 
 	void SetGameState(const EIFGameState NewState);
+
+	UFUNCTION()
+	void KillPlayer();
 };
