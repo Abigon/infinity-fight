@@ -181,5 +181,5 @@ void AIF_Character::Die()
 
 void AIF_Character::Test()
 {
-	ChangeHealth(-20.f);
+	TakeDamage(20.f, FDamageEvent(), nullptr, nullptr);
 }
