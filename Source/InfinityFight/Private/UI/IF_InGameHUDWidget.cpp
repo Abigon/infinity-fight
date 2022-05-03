@@ -26,3 +26,9 @@ float UIF_InGameHUDWidget::GetStaminaPercent() const
 	if (!CharMovComp) return 0.f;
 	return CharMovComp->GetStaminaPercent();
 }
+
+FLinearColor UIF_InGameHUDWidget::GetStaminaBarColor() const
+{
+	if (!CharMovComp) return StaminaBarNormalColor;
+	return CharMovComp->IsStaminaBelowMin() ? StaminaBarBelowMinColor : StaminaBarNormalColor;
+}

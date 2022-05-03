@@ -7,6 +7,7 @@
 #include "IF_Character.generated.h"
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnPlayerDeathSignature);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnPlayerSprintSignature, bool, bSprinting);
 
 UCLASS()
 class INFINITYFIGHT_API AIF_Character : public ACharacter
@@ -15,6 +16,7 @@ class INFINITYFIGHT_API AIF_Character : public ACharacter
 
 public:
 	FOnPlayerDeathSignature OnPlayerDeath;
+	FOnPlayerSprintSignature OnPlayerSprint;
 
 protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Camera")
@@ -37,7 +39,6 @@ protected:
 
 private:
 	bool bAttacking = false;
-	bool bSprinting = false;
 	bool bPlayingCombatMontage = false;
 
 	float Health = 0.f;
@@ -57,7 +58,6 @@ public:
 	}
 	float GetHealthPercent() const { return MaxHealth != 0 ? Health / MaxHealth : 0.f; }
 
-	FORCEINLINE bool IsSprint() const { return bSprinting; }
 	FORCEINLINE bool IsDead() const { return FMath::IsNearlyZero(Health); }
 
 	// Functions will be called from Notifies

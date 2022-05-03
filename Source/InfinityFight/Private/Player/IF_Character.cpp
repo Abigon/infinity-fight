@@ -114,12 +114,12 @@ void AIF_Character::Jump()
 
 void AIF_Character::SprintStart()
 {
-	bSprinting = true;
+	OnPlayerSprint.Broadcast(true);
 }
 
 void AIF_Character::SprintEnd()
 {
-	bSprinting = false;
+	OnPlayerSprint.Broadcast(false);
 }
 
 void AIF_Character::AttackButtonPressed()
