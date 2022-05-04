@@ -5,11 +5,11 @@
 #include "Components/CapsuleComponent.h"
 #include "Camera/CameraComponent.h"
 #include "GameFramework/CharacterMovementComponent.h"
+#include "Items/IF_Weapon.h"
 #include "Player/IF_CharacterMovementComponent.h"
 
 AIF_Character::AIF_Character(const FObjectInitializer& ObjInit)
 	: Super(ObjInit.SetDefaultSubobjectClass<UIF_CharacterMovementComponent>(ACharacter::CharacterMovementComponentName))
-
 {
 	PrimaryActorTick.bCanEverTick = true;
 
@@ -38,8 +38,6 @@ AIF_Character::AIF_Character(const FObjectInitializer& ObjInit)
 void AIF_Character::BeginPlay()
 {
 	Super::BeginPlay();
-
-	SetMaxHealth(MaxHealth);
 }
 
 void AIF_Character::Tick(float DeltaTime)
@@ -125,6 +123,7 @@ void AIF_Character::SprintEnd()
 void AIF_Character::AttackButtonPressed()
 {
 	bAttacking = true;
+	Attack();
 }
 
 void AIF_Character::AttackButtonRealise()
@@ -137,6 +136,7 @@ void AIF_Character::Attack()
 	if (!CanAttack()) return;
 
 	bPlayingCombatMontage = true;
+	PlayAnimMontage(AttackMontage, 1.f, "Attack1");
 }
 
 void AIF_Character::AttackEnd()
@@ -148,35 +148,64 @@ void AIF_Character::AttackEnd()
 	}
 }
 
+void AIF_Character::ActivateAttackCollision()
+{
+	if (EquippedWeapon)
+	{
+		EquippedWeapon->ActivateCollision();
+	}
+}
+
+void AIF_Character::DeactivateAttackCollision()
+{
+	if (EquippedWeapon)
+	{
+		EquippedWeapon->DeactivateCollision();
+	}
+}
+
+void AIF_Character::PlaySwingSound()
+{
+	if (EquippedWeapon)
+	{
+		EquippedWeapon->PlaySwingSound();
+	}
+}
+
 bool AIF_Character::CanAttack() const
 {
-	return !bPlayingCombatMontage || !IsDead();
+	return !bPlayingCombatMontage && !IsDead() && EquippedWeapon;
 }
 
-float AIF_Character::TakeDamage(float DamageAmount, FDamageEvent const& DamageEvent, AController* EventInstigator, AActor* DamageCauser)
+void AIF_Character::EquipWeapon(AIF_Weapon* Weapon)
 {
-	const float TempDamage = Super::TakeDamage(DamageAmount, DamageEvent, EventInstigator, DamageCauser);
-	ChangeHealth(-TempDamage);
-	return TempDamage;
-}
-
-void AIF_Character::ChangeHealth(const float DeltaHealth)
-{
-	Health = FMath::Clamp(Health + DeltaHealth, 0.f, MaxHealth);
-	if (Health <= 0)
+	if (!Weapon) return;
+	if (EquippedWeapon)
 	{
-		Die();
+		EquippedWeapon->DetachFromActor(FDetachmentTransformRules::KeepWorldTransform);
+		EquippedWeapon->Destroy();
 	}
+	Weapon->Equip(this);
+	const FAttachmentTransformRules AttachmentRules(EAttachmentRule::SnapToTarget, false);
+	Weapon->AttachToComponent(GetMesh(), AttachmentRules, WeaponSocketName);
+	EquippedWeapon = Weapon;
 }
 
 void AIF_Character::Die()
 {
 	StopAnimMontage();
+	GetMesh()->SetRelativeLocation(FVector(0.f, 0.f, -88.f));
 	GetCharacterMovement()->DisableMovement();
 	GetCapsuleComponent()->SetCollisionResponseToAllChannels(ECollisionResponse::ECR_Ignore);
 
 	PlayAnimMontage(DeathMontage);
 	OnPlayerDeath.Broadcast();
+}
+
+void AIF_Character::DeadEnd()
+{
+	GetMesh()->bNoSkeletonUpdate = true;
+	GetMesh()->bPauseAnims = true;
 }
 
 void AIF_Character::Test()

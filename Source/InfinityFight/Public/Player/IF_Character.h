@@ -3,14 +3,14 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "GameFramework/Character.h"
+#include "Core/IF_BaseCharacter.h"
 #include "IF_Character.generated.h"
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnPlayerDeathSignature);
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnPlayerSprintSignature, bool, bSprinting);
 
 UCLASS()
-class INFINITYFIGHT_API AIF_Character : public ACharacter
+class INFINITYFIGHT_API AIF_Character : public AIF_BaseCharacter
 {
 	GENERATED_BODY()
 
@@ -29,42 +29,35 @@ protected:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Camera")
 	float BaseLookUpRate = 65.f;
 
-	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Health")
-	float MaxHealth = 100.f;
-
-	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Animations")
-	class UAnimMontage* DeathMontage;
-	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Animations")
-	class UAnimMontage* AttackMontage;
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Combat")
+	FName WeaponSocketName = "hand_rSocket";
 
 private:
 	bool bAttacking = false;
 	bool bPlayingCombatMontage = false;
 
-	float Health = 0.f;
+	UPROPERTY()
+	class AIF_Weapon* EquippedWeapon = nullptr;
 
 public:
 	AIF_Character(const FObjectInitializer& ObjInit);
 	virtual void Tick(float DeltaTime) override;
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 	virtual void Jump() override;
-	virtual float TakeDamage(float DamageAmount, struct FDamageEvent const& DamageEvent, //
-		class AController* EventInstigator, AActor* DamageCauser) override;
 
-	void SetMaxHealth(const float NewMaxHealth)
-	{
-		MaxHealth = NewMaxHealth;
-		Health = MaxHealth;
-	}
-	float GetHealthPercent() const { return MaxHealth != 0 ? Health / MaxHealth : 0.f; }
-
-	FORCEINLINE bool IsDead() const { return FMath::IsNearlyZero(Health); }
-
-	// Functions will be called from Notifies
-	void AttackEnd();
+	void EquipWeapon(class AIF_Weapon* Weapon);
 
 protected:
 	virtual void BeginPlay() override;
+
+	// vitrual functions for OnAnimNotify
+	virtual void AttackEnd() override;
+	virtual void DeadEnd() override;
+	virtual void ActivateAttackCollision() override;
+	virtual void DeactivateAttackCollision() override;
+	virtual void PlaySwingSound() override;
+
+	virtual void Die() override;
 
 	UFUNCTION(BlueprintCallable, Category = "Test")
 	void Test();
@@ -84,7 +77,4 @@ private:
 	void AttackButtonPressed();
 	void AttackButtonRealise();
 	void Attack();
-
-	void ChangeHealth(const float DeltaHealth);
-	void Die();
 };

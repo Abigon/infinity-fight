@@ -12,20 +12,20 @@ class INFINITYFIGHT_API AIF_Item : public AActor
 	GENERATED_BODY()
 
 protected:
-	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Component")
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Component")
 	class USphereComponent* CollisionVolume;
-	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Component")
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Component")
 	class UStaticMeshComponent* Mesh;
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Component")
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Component")
 	class UParticleSystemComponent* IdleParticlesComponent;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Item | FX")
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Item | FX")
 	class UParticleSystem* OverlapParticles;
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Item | FX")
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Item | FX")
 	class USoundCue* OverlapSound;
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Item | FX")
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Item | FX")
 	bool bRotate = true;
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Item | FX")
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Item | FX")
 	float RotationRate = 45.f;
 
 public:

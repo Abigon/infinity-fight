@@ -47,6 +47,6 @@ void AIF_Item::OnOverlapBegin(UPrimitiveComponent* OverlappedComponent, AActor* 
 void AIF_Item::SpawnOverlapEffects()
 {
 	IdleParticlesComponent->Deactivate();
-	UGameplayStatics::SpawnEmitterAtLocation(GetWorld(), OverlapParticles, GetActorLocation(), FRotator(0.f), true);
-	UGameplayStatics::PlaySoundAtLocation(GetWorld(), OverlapSound, GetActorLocation());
+	UGameplayStatics::SpawnEmitterAtLocation(this, OverlapParticles, GetActorLocation(), FRotator(0.f), true);
+	UGameplayStatics::PlaySoundAtLocation(this, OverlapSound, GetActorLocation());
 }

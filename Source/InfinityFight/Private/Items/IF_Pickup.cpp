@@ -10,5 +10,6 @@ void AIF_Pickup::OnOverlapExecute(AActor* Actor)
 	{
 		SpawnOverlapEffects();
 		OnPickupBP(Char);
+		Destroy();
 	}
 }
