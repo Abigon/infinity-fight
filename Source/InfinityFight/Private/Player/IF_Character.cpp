@@ -208,6 +208,16 @@ void AIF_Character::DeadEnd()
 	GetMesh()->bPauseAnims = true;
 }
 
+void AIF_Character::UseHealPotion(const float Value) 
+{
+	ChangeHealth(Value);
+}
+
+void AIF_Character::AddTreasure(const int32 Value)
+{
+	//TODO: add tresure
+}
+
 void AIF_Character::Test()
 {
 	TakeDamage(20.f, FDamageEvent(), nullptr, nullptr);

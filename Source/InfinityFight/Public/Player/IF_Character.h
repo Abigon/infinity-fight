@@ -47,6 +47,11 @@ public:
 
 	void EquipWeapon(class AIF_Weapon* Weapon);
 
+	UFUNCTION(BlueprintCallable, Category = "Pickup")
+	void UseHealPotion(const float Value);
+	UFUNCTION(BlueprintCallable, Category = "Pickup")
+	void AddTreasure(const int32 Value);
+
 protected:
 	virtual void BeginPlay() override;
 
