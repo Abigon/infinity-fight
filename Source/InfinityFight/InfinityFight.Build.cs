@@ -13,7 +13,8 @@ public class InfinityFight : ModuleRules
 			"Core", 
 			"CoreUObject", 
 			"Engine", 
-			"InputCore"
+			"InputCore",
+			"AIModule" 
 		});
 
 		PrivateDependencyModuleNames.AddRange(new string[] {  });

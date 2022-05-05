@@ -154,6 +154,7 @@ void AIF_Character::AttackEnd()
 
 void AIF_Character::ActivateAttackCollision()
 {
+	Super::ActivateAttackCollision();
 	if (EquippedWeapon)
 	{
 		EquippedWeapon->ActivateCollision();
@@ -162,6 +163,7 @@ void AIF_Character::ActivateAttackCollision()
 
 void AIF_Character::DeactivateAttackCollision()
 {
+	Super::DeactivateAttackCollision();
 	if (EquippedWeapon)
 	{
 		EquippedWeapon->DeactivateCollision();
@@ -170,6 +172,7 @@ void AIF_Character::DeactivateAttackCollision()
 
 void AIF_Character::PlaySwingSound()
 {
+	Super::PlaySwingSound();
 	if (EquippedWeapon)
 	{
 		EquippedWeapon->PlaySwingSound();
