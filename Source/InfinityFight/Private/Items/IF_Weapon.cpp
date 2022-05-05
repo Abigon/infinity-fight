@@ -1,7 +1,7 @@
 // Copyright Dmitrii Shukaev. All Rights Reserved.
 
 #include "Items/IF_Weapon.h"
-#include "Core/IF_BaseCharacter.h"
+#include "Character/IF_BaseCharacter.h"
 #include "Components/BoxComponent.h"
 #include "Components/SphereComponent.h"
 #include "Engine/SkeletalMeshSocket.h"

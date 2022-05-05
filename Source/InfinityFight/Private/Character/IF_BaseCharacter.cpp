@@ -1,6 +1,6 @@
 // Copyright Dmitrii Shukaev. All Rights Reserved.
 
-#include "Core/IF_BaseCharacter.h"
+#include "Character/IF_BaseCharacter.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "Kismet/GameplayStatics.h"
 #include "Sound/SoundCue.h"

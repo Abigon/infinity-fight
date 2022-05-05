@@ -3,7 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "Core/IF_BaseCharacter.h"
+#include "Character/IF_BaseCharacter.h"
 #include "IF_Character.generated.h"
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnPlayerDeathSignature);

@@ -1,7 +1,7 @@
 // Copyright Dmitrii Shukaev. All Rights Reserved.
 
 #include "Animations/IF_AnimNotify.h"
-#include "Core/IF_BaseCharacter.h"
+#include "Character/IF_BaseCharacter.h"
 
 void UIF_AnimNotify::Notify(USkeletalMeshComponent* MeshComp, UAnimSequenceBase* Animation)
 {
