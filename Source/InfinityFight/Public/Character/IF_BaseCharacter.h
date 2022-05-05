@@ -16,9 +16,7 @@ protected:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Health")
 	float MaxHealth = 100.f;
 
-	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Animations")
-	class UAnimMontage* DeathMontage;
-	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Animations")
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Combat")
 	TArray<FMontageInfo> AttackMontages;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Combat")
@@ -29,7 +27,7 @@ protected:
 	bool bPlayingCombatMontage = false;
 
 private:
-	float Health = 0.f;
+	float Health = 100.f;
 
 public:
 	AIF_BaseCharacter(const FObjectInitializer& ObjectInitializer = FObjectInitializer::Get());
@@ -50,8 +48,8 @@ protected:
 
 	// vitrual functions for OnAnimNotify
 	virtual void AttackEnd();
-	virtual void DeadEnd(){};
 	virtual void ActivateAttackCollision(){};
+	virtual void ActivateAttack2Collision(){};
 	virtual void DeactivateAttackCollision(){};
 	virtual void PlaySwingSound(){};
 

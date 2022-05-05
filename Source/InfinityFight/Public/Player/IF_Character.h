@@ -57,7 +57,6 @@ protected:
 
 	// vitrual functions for OnAnimNotify
 	virtual void AttackEnd() override;
-	virtual void DeadEnd() override;
 	virtual void ActivateAttackCollision() override;
 	virtual void DeactivateAttackCollision() override;
 	virtual void PlaySwingSound() override;

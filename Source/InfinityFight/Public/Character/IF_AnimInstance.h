@@ -16,10 +16,12 @@ protected:
 	float Speed = 0.f;
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Movement")
 	bool bIsInAir = false;
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Movement")
+	bool bIsDead = false;
 
 private:
 	UPROPERTY()
-	class ACharacter* Character = nullptr;
+	class AIF_BaseCharacter* Character = nullptr;
 
 public:
 	virtual void NativeInitializeAnimation() override;

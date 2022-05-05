@@ -20,10 +20,10 @@ UENUM(Blueprinttype)
 enum class EAnimNotifyType : uint8
 {
 	EAT_WeaponActivate UMETA(DisplayName = "Weapon Activate"),
+	EAT_WeaponActivate2 UMETA(DisplayName = "Weapon Activate2"),
 	EAT_WeaponDeactivate UMETA(DisplayName = "Weapon Deactivate"),
 	EAT_WeaponSound UMETA(DisplayName = "Play Weapon Sound"),
 	EAT_AttackEnd UMETA(DisplayName = "Attack End"),
-	EAT_DeadEnd UMETA(DisplayName = "Dead End"),
 	EAT_MAX UMETA(DisplayName = "DefaultMAX")
 };
 

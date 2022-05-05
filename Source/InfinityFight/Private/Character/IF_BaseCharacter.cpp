@@ -28,10 +28,10 @@ void AIF_BaseCharacter::OnAnimNotify(const EAnimNotifyType Type)
 	switch (Type)
 	{
 		case EAnimNotifyType::EAT_WeaponActivate: ActivateAttackCollision(); break;
+		case EAnimNotifyType::EAT_WeaponActivate2: ActivateAttack2Collision(); break;
 		case EAnimNotifyType::EAT_WeaponDeactivate: DeactivateAttackCollision(); break;
 		case EAnimNotifyType::EAT_WeaponSound: PlaySwingSound(); break;
 		case EAnimNotifyType::EAT_AttackEnd: AttackEnd(); break;
-		case EAnimNotifyType::EAT_DeadEnd: DeadEnd(); break;
 		default: break;
 	}
 }

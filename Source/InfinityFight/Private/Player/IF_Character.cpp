@@ -207,14 +207,7 @@ void AIF_Character::Die()
 	GetCharacterMovement()->DisableMovement();
 	GetCapsuleComponent()->SetCollisionResponseToAllChannels(ECollisionResponse::ECR_Ignore);
 
-	PlayAnimMontage(DeathMontage);
 	OnPlayerDeath.Broadcast();
-}
-
-void AIF_Character::DeadEnd()
-{
-	GetMesh()->bNoSkeletonUpdate = true;
-	GetMesh()->bPauseAnims = true;
 }
 
 void AIF_Character::UseHealPotion(const float Value)
