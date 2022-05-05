@@ -23,7 +23,7 @@ protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components")
 	UStaticMeshComponent* FloorSwitch;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Floor Switch", meta = (Units = "s"))
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Floor Switch", meta = (Units = "S", ClampMin = 0.f))
 	float WaitToRaiseTime = 0.5f;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Floor Switch")
 	bool CanClose = true;

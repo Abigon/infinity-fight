@@ -15,7 +15,7 @@ protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components")
 	UStaticMeshComponent* DoorMesh;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Door", meta = (Units = "s"))
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Door", meta = (Units = "S", ClampMin = 0.f))
 	float WaitToCloseTime = 1.0f;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Door")
 	bool CanClose = true;
