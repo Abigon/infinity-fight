@@ -41,7 +41,7 @@ protected:
 private:
 	UPROPERTY()
 	class AAIController* MyController = nullptr;
-	
+
 	UPROPERTY()
 	class AIF_Character* Target = nullptr;
 
@@ -50,11 +50,13 @@ private:
 
 	FTimerHandle BackToStartTimer;
 	FTimerHandle AttackTimer;
-	
+
 public:
 	AIF_Enemy();
 	virtual void Tick(float DeltaSeconds) override;
-	
+
+	void InitControllerOnSpawn();
+
 protected:
 	virtual void BeginPlay() override;
 

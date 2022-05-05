@@ -14,7 +14,7 @@ AIF_Enemy::AIF_Enemy()
 {
 	GetMesh()->SetCollisionResponseToChannel(ECollisionChannel::ECC_Camera, ECollisionResponse::ECR_Ignore);
 	GetCapsuleComponent()->SetCollisionResponseToChannel(ECollisionChannel::ECC_Camera, ECollisionResponse::ECR_Ignore);
-	
+
 	AgroSphere = CreateDefaultSubobject<USphereComponent>("AgroSphere");
 	AgroSphere->SetupAttachment(GetRootComponent());
 	AgroSphere->SetCollisionResponseToAllChannels(ECollisionResponse::ECR_Ignore);
@@ -26,7 +26,7 @@ AIF_Enemy::AIF_Enemy()
 	AttackSphere->SetCollisionResponseToAllChannels(ECollisionResponse::ECR_Ignore);
 	AttackSphere->SetCollisionResponseToChannel(ECollisionChannel::ECC_Pawn, ECollisionResponse::ECR_Overlap);
 	AttackSphere->InitSphereRadius(75.f);
-	
+
 	CombatRightCollision = CreateDefaultSubobject<UBoxComponent>("CombatRight");
 	CombatRightCollision->SetupAttachment(GetMesh(), RightSocketName);
 	CombatRightCollision->SetCollisionEnabled(ECollisionEnabled::NoCollision);
@@ -59,6 +59,12 @@ void AIF_Enemy::BeginPlay()
 	MyController = Cast<AAIController>(GetController());
 }
 
+void AIF_Enemy::InitControllerOnSpawn()
+{
+	SpawnDefaultController();
+	MyController = Cast<AAIController>(GetController());
+}
+
 void AIF_Enemy::Tick(float DeltaSeconds)
 {
 	Super::Tick(DeltaSeconds);
@@ -71,7 +77,10 @@ void AIF_Enemy::AgroSphereOnOverlapBegin(UPrimitiveComponent* OverlappedComponen
 	const auto Char = Cast<AIF_Character>(OtherActor);
 	if (!Char || Char->IsDead() || IsDead()) return;
 	Target = Char;
-	MyController->SetFocus(Target);
+	if (MyController)
+	{
+		MyController->SetFocus(Target);
+	}
 	GetWorldTimerManager().ClearTimer(BackToStartTimer);
 }
 
@@ -81,7 +90,10 @@ void AIF_Enemy::AgroSphereOnOverlapEnd(UPrimitiveComponent* OverlappedComponent,
 	const auto Char = Cast<AIF_Character>(OtherActor);
 	if (!Char) return;
 	Target = nullptr;
-	MyController->SetFocus(nullptr);
+	if (MyController)
+	{
+		MyController->SetFocus(nullptr);
+	}
 
 	GetWorldTimerManager().SetTimer(BackToStartTimer, this, &AIF_Enemy::BackToStartLocation, BackToStartTime, false);
 }
@@ -90,11 +102,11 @@ void AIF_Enemy::MoveToTarget()
 {
 	if (!Target) return;
 
-	if (!bCanAttack)
+	if (!bCanAttack && MyController)
 	{
 		FAIMoveRequest MoveRequest;
 		MoveRequest.SetGoalActor(Target);
-		MoveRequest.SetAcceptanceRadius(AttackSphere->GetScaledSphereRadius()/2);
+		MoveRequest.SetAcceptanceRadius(AttackSphere->GetScaledSphereRadius() / 2);
 		FNavPathSharedPtr NavPath;
 		MyController->MoveTo(MoveRequest, &NavPath);
 	}
@@ -116,7 +128,7 @@ void AIF_Enemy::AttackSphereOnOverlapBegin(UPrimitiveComponent* OverlappedCompon
 {
 	const auto Char = Cast<AIF_Character>(OtherActor);
 	if (!Char) return;
-	
+
 	bCanAttack = true;
 	StartAttackTimer();
 }
@@ -126,7 +138,7 @@ void AIF_Enemy::AttackSphereOnOverlapEnd(UPrimitiveComponent* OverlappedComponen
 {
 	const auto Char = Cast<AIF_Character>(OtherActor);
 	if (!Char) return;
-	
+
 	bCanAttack = false;
 	GetWorldTimerManager().ClearTimer(AttackTimer);
 }
@@ -203,6 +215,6 @@ void AIF_Enemy::Die()
 	DeactivateAttackCollision();
 	AgroSphere->SetCollisionEnabled(ECollisionEnabled::NoCollision);
 	AttackSphere->SetCollisionEnabled(ECollisionEnabled::NoCollision);
-	
+
 	SetLifeSpan(DeathDelay);
 }
