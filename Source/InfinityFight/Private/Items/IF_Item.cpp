@@ -10,13 +10,13 @@ AIF_Item::AIF_Item()
 {
 	PrimaryActorTick.bCanEverTick = true;
 
-	CollisionVolume = CreateDefaultSubobject<USphereComponent>(TEXT("CollisionVolume"));
+	CollisionVolume = CreateDefaultSubobject<USphereComponent>("CollisionVolume");
 	SetRootComponent(CollisionVolume);
 
-	Mesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Mesh"));
+	Mesh = CreateDefaultSubobject<UStaticMeshComponent>("Mesh");
 	Mesh->SetupAttachment(GetRootComponent());
 
-	IdleParticlesComponent = CreateDefaultSubobject<UParticleSystemComponent>(TEXT("IdleParticlesComponent"));
+	IdleParticlesComponent = CreateDefaultSubobject<UParticleSystemComponent>("IdleParticlesComponent");
 	IdleParticlesComponent->SetupAttachment(GetRootComponent());
 }
 

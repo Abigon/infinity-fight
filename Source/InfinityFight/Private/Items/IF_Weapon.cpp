@@ -14,10 +14,10 @@ AIF_Weapon::AIF_Weapon()
 	CollisionVolume->SetSphereRadius(140.f);
 	bRotate = false;
 
-	WeaponMesh = CreateDefaultSubobject<USkeletalMeshComponent>(TEXT("SkeletalMesh"));
+	WeaponMesh = CreateDefaultSubobject<USkeletalMeshComponent>("SkeletalMesh");
 	WeaponMesh->SetupAttachment(GetRootComponent());
 
-	CombatCollision = CreateDefaultSubobject<UBoxComponent>(TEXT("CombatCollision"));
+	CombatCollision = CreateDefaultSubobject<UBoxComponent>("CombatCollision");
 	CombatCollision->SetupAttachment(WeaponMesh);
 
 	CombatCollision->SetCollisionEnabled(ECollisionEnabled::NoCollision);
@@ -56,6 +56,7 @@ void AIF_Weapon::Equip(AIF_Character* Char)
 void AIF_Weapon::CombatOnOverlapBegin(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, //
 	UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {
+	if (OtherActor == GetOwner()) return;
 	const auto Char = Cast<AIF_BaseCharacter>(OtherActor);
 	if (!Char) return;
 

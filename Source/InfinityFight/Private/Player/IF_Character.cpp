@@ -40,6 +40,12 @@ void AIF_Character::BeginPlay()
 	Super::BeginPlay();
 }
 
+void AIF_Character::EndPlay(const EEndPlayReason::Type EndPlayReason)
+{
+	DestroyWeapon();
+	Super::EndPlay(EndPlayReason);
+}
+
 void AIF_Character::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
@@ -69,7 +75,7 @@ void AIF_Character::SetupPlayerInputComponent(UInputComponent* PlayerInputCompon
 
 bool AIF_Character::CanMove() const
 {
-	return !bAttacking || !IsDead();
+	return !bPlayingCombatMontage && !IsDead();
 }
 
 void AIF_Character::MoveForward(float Value)
@@ -134,14 +140,12 @@ void AIF_Character::AttackButtonRealise()
 void AIF_Character::Attack()
 {
 	if (!CanAttack()) return;
-
-	bPlayingCombatMontage = true;
-	PlayAnimMontage(AttackMontage, 1.f, "Attack1");
+	PlayAttackMontage();
 }
 
 void AIF_Character::AttackEnd()
 {
-	bPlayingCombatMontage = false;
+	Super::AttackEnd();
 	if (bAttacking)
 	{
 		Attack();
@@ -180,15 +184,20 @@ bool AIF_Character::CanAttack() const
 void AIF_Character::EquipWeapon(AIF_Weapon* Weapon)
 {
 	if (!Weapon) return;
+	DestroyWeapon();
+	Weapon->Equip(this);
+	const FAttachmentTransformRules AttachmentRules(EAttachmentRule::SnapToTarget, false);
+	Weapon->AttachToComponent(GetMesh(), AttachmentRules, WeaponSocketName);
+	EquippedWeapon = Weapon;
+}
+
+void AIF_Character::DestroyWeapon()
+{
 	if (EquippedWeapon)
 	{
 		EquippedWeapon->DetachFromActor(FDetachmentTransformRules::KeepWorldTransform);
 		EquippedWeapon->Destroy();
 	}
-	Weapon->Equip(this);
-	const FAttachmentTransformRules AttachmentRules(EAttachmentRule::SnapToTarget, false);
-	Weapon->AttachToComponent(GetMesh(), AttachmentRules, WeaponSocketName);
-	EquippedWeapon = Weapon;
 }
 
 void AIF_Character::Die()
@@ -208,14 +217,14 @@ void AIF_Character::DeadEnd()
 	GetMesh()->bPauseAnims = true;
 }
 
-void AIF_Character::UseHealPotion(const float Value) 
+void AIF_Character::UseHealPotion(const float Value)
 {
 	ChangeHealth(Value);
 }
 
 void AIF_Character::AddTreasure(const int32 Value)
 {
-	//TODO: add tresure
+	// TODO: add tresure
 }
 
 void AIF_Character::Test()

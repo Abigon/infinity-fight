@@ -19,18 +19,20 @@ protected:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Animations")
 	class UAnimMontage* DeathMontage;
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Animations")
-	class UAnimMontage* AttackMontage;
+	TArray<FMontageInfo> AttackMontages;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Combat")
 	class UParticleSystem* HitParticles;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Combat")
 	class USoundCue* HitSound;
 
+	bool bPlayingCombatMontage = false;
+
 private:
 	float Health = 0.f;
 
 public:
-	AIF_BaseCharacter(const FObjectInitializer& ObjInit);
+	AIF_BaseCharacter(const FObjectInitializer& ObjectInitializer = FObjectInitializer::Get());
 
 	void SetMaxHealth(const float NewMaxHealth);
 	void OnAnimNotify(const EAnimNotifyType Type);
@@ -47,12 +49,13 @@ protected:
 	virtual void BeginPlay() override;
 
 	// vitrual functions for OnAnimNotify
-	virtual void AttackEnd(){};
+	virtual void AttackEnd();
 	virtual void DeadEnd(){};
 	virtual void ActivateAttackCollision(){};
 	virtual void DeactivateAttackCollision(){};
 	virtual void PlaySwingSound(){};
 
+	virtual void PlayAttackMontage();
 	virtual void Die(){};
 
 	void ChangeHealth(const float DeltaHealth);

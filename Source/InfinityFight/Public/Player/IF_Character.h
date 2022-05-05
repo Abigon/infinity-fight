@@ -34,7 +34,6 @@ protected:
 
 private:
 	bool bAttacking = false;
-	bool bPlayingCombatMontage = false;
 
 	UPROPERTY()
 	class AIF_Weapon* EquippedWeapon = nullptr;
@@ -54,6 +53,7 @@ public:
 
 protected:
 	virtual void BeginPlay() override;
+	virtual void EndPlay(const EEndPlayReason::Type EndPlayReason) override;
 
 	// vitrual functions for OnAnimNotify
 	virtual void AttackEnd() override;
@@ -82,4 +82,6 @@ private:
 	void AttackButtonPressed();
 	void AttackButtonRealise();
 	void Attack();
+
+	void DestroyWeapon();
 };

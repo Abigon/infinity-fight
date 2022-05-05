@@ -5,7 +5,8 @@
 #include "Kismet/GameplayStatics.h"
 #include "Sound/SoundCue.h"
 
-AIF_BaseCharacter::AIF_BaseCharacter(const FObjectInitializer& ObjInit)
+AIF_BaseCharacter::AIF_BaseCharacter(const FObjectInitializer& ObjectInitializer)
+	: Super(ObjectInitializer)
 {
 	PrimaryActorTick.bCanEverTick = true;
 
@@ -46,6 +47,20 @@ float AIF_BaseCharacter::TakeDamage(float DamageAmount, FDamageEvent const& Dama
 	const float TempDamage = Super::TakeDamage(DamageAmount, DamageEvent, EventInstigator, DamageCauser);
 	ChangeHealth(-TempDamage);
 	return TempDamage;
+}
+
+void AIF_BaseCharacter::PlayAttackMontage()
+{
+	if (AttackMontages.Num() == 0) return;
+
+	bPlayingCombatMontage = true;
+	const int32 Index = FMath::RandRange(0, AttackMontages.Num() - 1);
+	PlayAnimMontage(AttackMontages[Index].Montage, AttackMontages[Index].Rate);
+}
+
+void AIF_BaseCharacter::AttackEnd()
+{
+	bPlayingCombatMontage = false;
 }
 
 void AIF_BaseCharacter::ChangeHealth(const float DeltaHealth)

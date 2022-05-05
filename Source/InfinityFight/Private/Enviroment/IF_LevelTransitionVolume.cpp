@@ -10,10 +10,10 @@ AIF_LevelTransitionVolume::AIF_LevelTransitionVolume()
 {
 	PrimaryActorTick.bCanEverTick = false;
 
-	TransitionVolume = CreateDefaultSubobject<UBoxComponent>(TEXT("TransitionVolume"));
+	TransitionVolume = CreateDefaultSubobject<UBoxComponent>("TransitionVolume");
 	SetRootComponent(TransitionVolume);
 
-	Billboard = CreateDefaultSubobject<UBillboardComponent>(TEXT("Billboard"));
+	Billboard = CreateDefaultSubobject<UBillboardComponent>("Billboard");
 	Billboard->SetupAttachment(GetRootComponent());
 }
 

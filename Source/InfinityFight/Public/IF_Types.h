@@ -26,3 +26,14 @@ enum class EAnimNotifyType : uint8
 	EAT_DeadEnd UMETA(DisplayName = "Dead End"),
 	EAT_MAX UMETA(DisplayName = "DefaultMAX")
 };
+
+USTRUCT(BlueprintType)
+struct FMontageInfo
+{
+	GENERATED_BODY()
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Animations")
+	class UAnimMontage* Montage;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Animations")
+	float Rate = 1.f;
+};
