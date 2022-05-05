@@ -49,7 +49,7 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "Pickup")
 	void UseHealPotion(const float Value);
 	UFUNCTION(BlueprintCallable, Category = "Pickup")
-	void AddTreasure(const int32 Value);
+	void AddTreasures(const int32 Value);
 
 protected:
 	virtual void BeginPlay() override;

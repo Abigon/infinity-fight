@@ -1,6 +1,7 @@
 // Copyright Dmitrii Shukaev. All Rights Reserved.
 
 #include "Player/IF_Character.h"
+#include "Player/IF_PlayerState.h"
 #include "GameFramework/SpringArmComponent.h"
 #include "Components/CapsuleComponent.h"
 #include "Camera/CameraComponent.h"
@@ -218,9 +219,13 @@ void AIF_Character::UseHealPotion(const float Value)
 	ChangeHealth(Value);
 }
 
-void AIF_Character::AddTreasure(const int32 Value)
+void AIF_Character::AddTreasures(const int32 Value)
 {
-	// TODO: add tresure
+	const auto PS = Cast<AIF_PlayerState>(GetPlayerState());
+	if (PS)
+	{
+		PS->ChangeTreasures(Value);
+	}
 }
 
 void AIF_Character::Test()
