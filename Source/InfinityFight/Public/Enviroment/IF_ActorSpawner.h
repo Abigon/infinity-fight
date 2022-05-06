@@ -17,6 +17,8 @@ protected:
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Spawner")
 	TArray<TSubclassOf<AActor>> SpawnActorClasses;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Spawner")
+	class AIF_FloorSwitcher* Switcher = nullptr;
 
 public:
 	AIF_ActorSpawner();
@@ -25,5 +27,6 @@ protected:
 	virtual void BeginPlay() override;
 
 private:
-	void SpawnActor();
+	UFUNCTION()
+	void SpawnActor(bool bIsOpen);
 };

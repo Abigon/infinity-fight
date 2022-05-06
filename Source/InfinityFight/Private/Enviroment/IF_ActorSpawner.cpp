@@ -1,6 +1,7 @@
 // Copyright Dmitrii Shukaev. All Rights Reserved.
 
 #include "Enviroment/IF_ActorSpawner.h"
+#include "Enviroment/IF_FloorSwitcher.h"
 #include "Components/BoxComponent.h"
 #include "Enemy/IF_Enemy.h"
 #include "Kismet/KismetMathLibrary.h"
@@ -16,10 +17,17 @@ AIF_ActorSpawner::AIF_ActorSpawner()
 void AIF_ActorSpawner::BeginPlay()
 {
 	Super::BeginPlay();
-	SpawnActor();
+	if (Switcher)
+	{
+		Switcher->OnOpenDoor.AddDynamic(this, &AIF_ActorSpawner::SpawnActor);
+	}
+	else
+	{
+		SpawnActor(false);
+	}
 }
 
-void AIF_ActorSpawner::SpawnActor()
+void AIF_ActorSpawner::SpawnActor(bool bIsOpen)
 {
 	if (!GetWorld() || SpawnActorClasses.Num() == 0) return;
 
