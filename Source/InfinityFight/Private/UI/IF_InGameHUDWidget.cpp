@@ -11,7 +11,7 @@ void UIF_InGameHUDWidget::NativeOnInitialized()
 	Player = Cast<AIF_Character>(GetOwningPlayerPawn());
 	if (Player)
 	{
-		CharMovComp = Cast<UIF_CharacterMovementComponent>(Player->GetCharacterMovement()); 
+		CharMovComp = Cast<UIF_CharacterMovementComponent>(Player->GetCharacterMovement());
 	}
 }
 
@@ -21,7 +21,7 @@ float UIF_InGameHUDWidget::GetHealthPercent() const
 	return Player->GetHealthPercent();
 }
 
-float UIF_InGameHUDWidget::GetStaminaPercent() const 
+float UIF_InGameHUDWidget::GetStaminaPercent() const
 {
 	if (!CharMovComp) return 0.f;
 	return CharMovComp->GetStaminaPercent();

@@ -19,6 +19,7 @@ protected:
 	virtual void BeginPlay() override;
 	virtual void SetupInputComponent() override;
 
+	UFUNCTION(BlueprintCallable, Category = "Pause")
 	void OnPauseGame();
 	UFUNCTION()
 	void OnGameStateChanged(const EIFGameState State);
