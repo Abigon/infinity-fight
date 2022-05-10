@@ -17,7 +17,7 @@ protected:
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Platform", meta = (MakeEditWidget = "true"))
 	FVector EndPoint;
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Platform")
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Platform", meta = (ClampMin = 0.f))
 	float MovementSpeed = 2.f;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Platform", meta = (Units = "S", ClampMin = 0.f))
 	float StopTime = 2.f;

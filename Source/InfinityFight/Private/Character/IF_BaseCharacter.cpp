@@ -46,6 +46,7 @@ float AIF_BaseCharacter::TakeDamage(float DamageAmount, FDamageEvent const& Dama
 {
 	const float TempDamage = Super::TakeDamage(DamageAmount, DamageEvent, EventInstigator, DamageCauser);
 	ChangeHealth(-TempDamage);
+	DamageReact();
 	return TempDamage;
 }
 
@@ -56,6 +57,13 @@ void AIF_BaseCharacter::PlayAttackMontage()
 	bPlayingCombatMontage = true;
 	const int32 Index = FMath::RandRange(0, AttackMontages.Num() - 1);
 	PlayAnimMontage(AttackMontages[Index].Montage, AttackMontages[Index].Rate);
+}
+
+void AIF_BaseCharacter::DamageReact()
+{
+	if (ReactOnHitProbability <= 0.f || !ReactMontage) return;
+	if (FMath::RandRange(0, 100) > ReactOnHitProbability) return;
+	PlayAnimMontage(ReactMontage);
 }
 
 void AIF_BaseCharacter::AttackEnd()

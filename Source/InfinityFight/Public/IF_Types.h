@@ -34,6 +34,6 @@ struct FMontageInfo
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Animations")
 	class UAnimMontage* Montage;
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Animations")
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Animations", meta = (ClampMin = 0.f))
 	float Rate = 1.f;
 };

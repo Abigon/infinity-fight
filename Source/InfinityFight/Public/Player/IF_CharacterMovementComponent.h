@@ -18,18 +18,18 @@ public:
 	FOnStaminaChangedSignature OnStaminaChanged;
 
 protected:
-	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Player Movement | Speed")
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Player Movement | Speed", meta = (ClampMin = 0.f))
 	float RunSpeed = 450.f;
-	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Player Movement | Speed")
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Player Movement | Speed", meta = (ClampMin = 0.f))
 	float SprintSpeed = 700.f;
 
-	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Player Movement | Stamina")
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Player Movement | Stamina", meta = (ClampMin = 0.f))
 	float MaxStamina = 100.f;
 	// Use stamina per one second
-	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Player Movement | Stamina")
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Player Movement | Stamina", meta = (ClampMin = 0.f))
 	float StaminaDrainRate = 25.f;
 	// Restore stamina per one second
-	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Player Movement | Stamina")
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Player Movement | Stamina", meta = (ClampMin = 0.f))
 	float StaminaRestoreRate = 10.f;
 
 private:

@@ -17,7 +17,7 @@ protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Component")
 	class UBoxComponent* CombatCollision;
 
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Item | Weapon")
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Item | Weapon", meta = (ClampMin = 0.f))
 	float Damage = 25.f;
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Item | Weapon")
 	TSubclassOf<UDamageType> DamageTypeClass = UDamageType::StaticClass();

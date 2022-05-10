@@ -12,9 +12,9 @@ class INFINITYFIGHT_API AIF_Explosion : public AIF_Item
 	GENERATED_BODY()
 
 protected:
-	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Explosion", meta = (Units = "cm"))
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Explosion", meta = (Units = "cm", ClampMin = 0.f))
 	float DamageRadius = 82.f;
-	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Explosion")
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Explosion", meta = (ClampMin = 0.f))
 	float DamageAmount = 15.f;
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Explosion")
 	bool DoFullDamage = true;

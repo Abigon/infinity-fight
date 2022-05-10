@@ -13,7 +13,7 @@ class INFINITYFIGHT_API AIF_BaseCharacter : public ACharacter
 	GENERATED_BODY()
 
 protected:
-	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Health")
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Health", meta = (ClampMin = 0.f))
 	float MaxHealth = 100.f;
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Combat")
@@ -23,6 +23,10 @@ protected:
 	class UParticleSystem* HitParticles;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Combat")
 	class USoundCue* HitSound;
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Combat", meta = (Units = "%", ClampMin = 0, ClampMax = 100, UIMin = 0, UIMax = 100))
+	int32 ReactOnHitProbability = 50;
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Combat")
+	UAnimMontage* ReactMontage;
 
 	bool bPlayingCombatMontage = false;
 
@@ -55,6 +59,7 @@ protected:
 
 	virtual void PlayAttackMontage();
 	virtual void Die(){};
+	virtual void DamageReact();
 
 	void ChangeHealth(const float DeltaHealth);
 };

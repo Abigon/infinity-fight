@@ -12,11 +12,11 @@ class INFINITYFIGHT_API AIF_PlayerState : public APlayerState
 	GENERATED_BODY()
 
 private:
-	int32 TreaseresAmount = 0.f;
+	int32 TreasuresAmount = 0.f;
 
 public:
 	UFUNCTION(BlueprintCallable, Category = "Treasures")
-	FORCEINLINE int32 GetTreasures() const { return TreaseresAmount; }
+	FORCEINLINE int32 GetTreasures() const { return TreasuresAmount; }
 
 	void ChangeTreasures(const int32 Delta);
 };
