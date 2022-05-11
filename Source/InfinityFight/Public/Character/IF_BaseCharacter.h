@@ -44,13 +44,14 @@ public:
 
 	float GetHealthPercent() const { return MaxHealth != 0 ? Health / MaxHealth : 0.f; }
 	FORCEINLINE bool IsDead() const { return FMath::IsNearlyZero(Health); }
+	FORCEINLINE float GetHealth() const { return Health; }
 
 	virtual void PlayImpactFX(const FVector& Location);
 
 protected:
 	virtual void BeginPlay() override;
 
-	// vitrual functions for OnAnimNotify
+	// virtual functions for OnAnimNotify
 	virtual void AttackEnd();
 	virtual void ActivateAttackCollision(){};
 	virtual void ActivateAttack2Collision(){};

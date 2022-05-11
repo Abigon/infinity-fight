@@ -228,6 +228,42 @@ void AIF_Character::AddTreasures(const int32 Value)
 	}
 }
 
+FPlayerSaveInfo AIF_Character::GetPlayerSaveInfo() const
+{
+	FPlayerSaveInfo PlayerSaveInfo;
+
+	PlayerSaveInfo.Health = GetHealth();
+	PlayerSaveInfo.MaxHealth = MaxHealth;
+	PlayerSaveInfo.Transform = GetActorTransform();
+
+	const auto CM = Cast<UIF_CharacterMovementComponent>(GetMovementComponent());
+	if (CM)
+	{
+		PlayerSaveInfo.MaxStamina = CM->GetMaxStamina();
+		PlayerSaveInfo.Stamina = CM->GetStamina();
+	}
+
+	const auto PS = Cast<AIF_PlayerState>(GetPlayerState());
+	if (PS)
+	{
+		PlayerSaveInfo.Treasures = PS->GetTreasures();
+	}
+	return PlayerSaveInfo;
+}
+
+void AIF_Character::UpdatePlayerFromSave(const FPlayerSaveInfo& PlayerSaveInfo)
+{
+	SetActorTransform(PlayerSaveInfo.Transform);
+	SetMaxHealth(PlayerSaveInfo.MaxHealth);
+	ChangeHealth(PlayerSaveInfo.Health - PlayerSaveInfo.MaxHealth);
+	AddTreasures(PlayerSaveInfo.Treasures);
+	const auto CM = Cast<UIF_CharacterMovementComponent>(GetMovementComponent());
+	if (CM)
+	{
+		CM->UpdateStaminaFromSave(PlayerSaveInfo.Stamina, PlayerSaveInfo.MaxStamina);
+	}
+}
+
 void AIF_Character::Test()
 {
 	TakeDamage(20.f, FDamageEvent(), nullptr, nullptr);

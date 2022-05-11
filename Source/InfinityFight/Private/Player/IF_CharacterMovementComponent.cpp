@@ -33,6 +33,12 @@ void UIF_CharacterMovementComponent::SetMaxStamina(const float NewMaxStamina)
 	bCanSprint = true;
 }
 
+void UIF_CharacterMovementComponent::UpdateStaminaFromSave(const float NewStamina, const float NewMaxStamina)
+{
+	MaxStamina = NewMaxStamina;
+	ChangeStamina(NewStamina - NewMaxStamina);
+}
+
 void UIF_CharacterMovementComponent::CheckStamina(const float DeltaTime)
 {
 	const bool IsMove = Velocity.Size() > 0;

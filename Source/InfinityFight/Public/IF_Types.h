@@ -37,3 +37,22 @@ struct FMontageInfo
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Animations", meta = (ClampMin = 0.f))
 	float Rate = 1.f;
 };
+
+USTRUCT(BlueprintType)
+struct FPlayerSaveInfo
+{
+	GENERATED_BODY()
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Save Game")
+	FTransform Transform;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Save Game")
+	float Health = 0;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Save Game")
+	float MaxHealth = 0;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Save Game")
+	float Stamina = 0;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Save Game")
+	float MaxStamina = 0;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Save Game")
+	int32 Treasures = 0;
+};

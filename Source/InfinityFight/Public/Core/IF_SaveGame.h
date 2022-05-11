@@ -3,6 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "IF_Types.h"
 #include "GameFramework/SaveGame.h"
 #include "IF_SaveGame.generated.h"
 
@@ -13,5 +14,8 @@ class INFINITYFIGHT_API UIF_SaveGame : public USaveGame
 
 public:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Save Game")
-	FVector PlayerLocation;
+	FString LevelName;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Save Game")
+	FPlayerSaveInfo PlayerSaveInfo;
 };

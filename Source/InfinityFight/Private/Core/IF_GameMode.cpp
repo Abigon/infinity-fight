@@ -2,6 +2,7 @@
 
 #include "Core/IF_GameMode.h"
 #include "Core/IF_PlayerController.h"
+#include "Core/IF_SaveGameSubsystem.h"
 #include "Kismet/GameplayStatics.h"
 #include "Player/IF_Character.h"
 #include "Player/IF_PlayerState.h"
@@ -15,6 +16,13 @@ AIF_GameMode::AIF_GameMode()
 	PlayerStateClass = AIF_PlayerState::StaticClass();
 }
 
+void AIF_GameMode::InitGame(const FString& MapName, const FString& Options, FString& ErrorMessage)
+{
+	Super::InitGame(MapName, Options, ErrorMessage);
+
+	bLoadGame = !UGameplayStatics::ParseOption(Options, "LoadGame").IsEmpty();
+}
+
 void AIF_GameMode::StartPlay()
 {
 	Super::StartPlay();
@@ -23,9 +31,19 @@ void AIF_GameMode::StartPlay()
 	if (Player0)
 	{
 		Player0->OnPlayerDeath.AddDynamic(this, &AIF_GameMode::KillPlayer);
+		const auto SG = GetGameInstance()->GetSubsystem<UIF_SaveGameSubsystem>();
+		if (SG)
+		{
+			SG->UpdatePlayerData(Player0);
+		}
 	}
 
 	SetGameState(EIFGameState::EGS_InGame);
+}
+
+void AIF_GameMode::HandleStartingNewPlayer_Implementation(APlayerController* NewPlayer)
+{
+	Super::HandleStartingNewPlayer_Implementation(NewPlayer);
 }
 
 void AIF_GameMode::KillPlayer()

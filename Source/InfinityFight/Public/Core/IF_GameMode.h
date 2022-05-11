@@ -18,8 +18,14 @@ public:
 	UPROPERTY(BlueprintAssignable, Category = "Game State")
 	FOnGameStateChangedSignature OnGameStateChanged;
 
+private:
+	bool bLoadGame = false;
+
+public:
 	AIF_GameMode();
 	virtual void StartPlay() override;
+	virtual void InitGame(const FString& MapName, const FString& Options, FString& ErrorMessage) override;
+	virtual void HandleStartingNewPlayer_Implementation(APlayerController* NewPlayer) override;
 
 	virtual bool SetPause(APlayerController* PC, FCanUnpause CanUnpauseDelegate = FCanUnpause()) override;
 	virtual bool ClearPause() override;

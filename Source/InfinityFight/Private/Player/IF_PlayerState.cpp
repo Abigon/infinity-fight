@@ -4,5 +4,5 @@
 
 void AIF_PlayerState::ChangeTreasures(const int32 Delta)
 {
-	TreasuresAmount = FMath::Clamp(TreasuresAmount - Delta, 0, INT32_MAX);
+	TreasuresAmount = FMath::Clamp(TreasuresAmount + Delta, 0, INT32_MAX);
 }

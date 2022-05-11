@@ -46,6 +46,9 @@ public:
 
 	float GetStaminaPercent() const { return MaxStamina != 0 ? Stamina / MaxStamina : 0.f; }
 	bool IsStaminaBelowMin() const { return Stamina < StaminaDrainRate; }
+	FORCEINLINE float GetStamina() const { return Stamina; }
+	FORCEINLINE float GetMaxStamina() const { return MaxStamina; }
+	void UpdateStaminaFromSave(const float NewStamina, const float NewMaxStamina);
 
 protected:
 	virtual void BeginPlay() override;

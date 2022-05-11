@@ -2,7 +2,7 @@
 
 #include "UI/IF_MainMenuWidget.h"
 #include "Components/Button.h"
-#include "Core/IF_GameInstance.h"
+#include "Core/IF_MenuFunctionLibrary.h"
 #include "Kismet/GameplayStatics.h"
 
 void UIF_MainMenuWidget::NativeOnInitialized()
@@ -27,25 +27,18 @@ void UIF_MainMenuWidget::NativeOnInitialized()
 void UIF_MainMenuWidget::OnChangedVisibility(ESlateVisibility InVisibility)
 {
 	if (InVisibility != ESlateVisibility::Visible) return;
-	LoadButton->SetIsEnabled(false);
+	LoadButton->SetIsEnabled(UIF_MenuFunctionLibrary::IsHasSave(this));
 }
 
 void UIF_MainMenuWidget::OnStartGamePressed()
 {
-	if (!GetWorld()) return;
-
-	const auto STUGameInstance = GetWorld()->GetGameInstance<UIF_GameInstance>();
-	if (!STUGameInstance) return;
-
-	if (STUGameInstance->GetFirstLevelName().IsNone())
-	{
-		UE_LOG(LogTemp, Error, TEXT("First level name is NONE"));
-		return;
-	}
-	UGameplayStatics::OpenLevel(this, STUGameInstance->GetFirstLevelName());
+	UIF_MenuFunctionLibrary::OpenFirstLevel(this);
 }
 
-void UIF_MainMenuWidget::OnLoadGamePressed() {}
+void UIF_MainMenuWidget::OnLoadGamePressed()
+{
+	UIF_MenuFunctionLibrary::LoadGame(this);
+}
 
 void UIF_MainMenuWidget::OnQuitPressed()
 {

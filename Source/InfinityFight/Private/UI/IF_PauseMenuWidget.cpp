@@ -2,7 +2,7 @@
 
 #include "UI/IF_PauseMenuWidget.h"
 #include "Components/Button.h"
-#include "Core/IF_GameInstance.h"
+#include "Core/IF_MenuFunctionLibrary.h"
 #include "GameFramework/GameModeBase.h"
 #include "Kismet/GameplayStatics.h"
 
@@ -28,7 +28,7 @@ void UIF_PauseMenuWidget::NativeOnInitialized()
 void UIF_PauseMenuWidget::OnChangedVisibility(ESlateVisibility InVisibility)
 {
 	if (InVisibility != ESlateVisibility::Visible) return;
-	LoadButton->SetIsEnabled(false);
+	LoadButton->SetIsEnabled(UIF_MenuFunctionLibrary::IsHasSave(this));
 }
 
 void UIF_PauseMenuWidget::OnResumePressed()
@@ -37,19 +37,12 @@ void UIF_PauseMenuWidget::OnResumePressed()
 	GetWorld()->GetAuthGameMode()->ClearPause();
 }
 
-void UIF_PauseMenuWidget::OnLoadGamePressed() {}
+void UIF_PauseMenuWidget::OnLoadGamePressed()
+{
+	UIF_MenuFunctionLibrary::LoadGame(this);
+}
 
 void UIF_PauseMenuWidget::OnMainMenuPressed()
 {
-	if (!GetWorld()) return;
-
-	const auto STUGameInstance = GetWorld()->GetGameInstance<UIF_GameInstance>();
-	if (!STUGameInstance) return;
-
-	if (STUGameInstance->GetMenuLevelName().IsNone())
-	{
-		UE_LOG(LogTemp, Error, TEXT("Menu level name is NONE"));
-		return;
-	}
-	UGameplayStatics::OpenLevel(this, STUGameInstance->GetMenuLevelName());
+	UIF_MenuFunctionLibrary::OpenMainMenu(this);
 }
