@@ -34,6 +34,7 @@ void AIF_PlayerController::OnPauseGame()
 	if (!GetWorld()) return;
 	const auto GameMode = Cast<AIF_GameMode>(GetWorld()->GetAuthGameMode());
 	if (!GameMode) return;
+	if (GameMode->GetIFGameState() != EIFGameState::EGS_Pause && GameMode->GetIFGameState() != EIFGameState::EGS_InGame) return;
 	
 	if (IsPaused())
 	{

@@ -31,10 +31,12 @@ void AIF_GameMode::StartPlay()
 	if (Player0)
 	{
 		Player0->OnPlayerDeath.AddDynamic(this, &AIF_GameMode::KillPlayer);
-		const auto SG = GetGameInstance()->GetSubsystem<UIF_SaveGameSubsystem>();
-		if (SG)
+		if (bLoadGame)
 		{
-			SG->UpdatePlayerData(Player0);
+			if (const auto SG = GetGameInstance()->GetSubsystem<UIF_SaveGameSubsystem>())
+			{
+				SG->UpdatePlayerData(Player0);
+			}
 		}
 	}
 
@@ -73,8 +75,8 @@ bool AIF_GameMode::ClearPause()
 
 void AIF_GameMode::SetGameState(const EIFGameState NewState)
 {
-	if (RFGameState == NewState) return;
+	if (IFGameState == NewState) return;
 
-	RFGameState = NewState;
-	OnGameStateChanged.Broadcast(RFGameState);
+	IFGameState = NewState;
+	OnGameStateChanged.Broadcast(IFGameState);
 }

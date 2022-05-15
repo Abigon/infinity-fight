@@ -20,6 +20,7 @@ public:
 
 private:
 	bool bLoadGame = false;
+	EIFGameState IFGameState = EIFGameState::EGS_MAX;
 
 public:
 	AIF_GameMode();
@@ -29,9 +30,9 @@ public:
 
 	virtual bool SetPause(APlayerController* PC, FCanUnpause CanUnpauseDelegate = FCanUnpause()) override;
 	virtual bool ClearPause() override;
+	FORCEINLINE EIFGameState GetIFGameState() const { return IFGameState; }
 
 private:
-	EIFGameState RFGameState = EIFGameState::EGS_MAX;
 
 	void SetGameState(const EIFGameState NewState);
 

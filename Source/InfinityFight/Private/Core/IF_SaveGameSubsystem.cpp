@@ -40,6 +40,6 @@ FString UIF_SaveGameSubsystem::GetLevelNameToLoad() const
 
 void UIF_SaveGameSubsystem::UpdatePlayerData(AIF_Character* Player)
 {
-	if (!CurrentSaveGame) return;
+	if (!Player || !CurrentSaveGame) return;
 	Player->UpdatePlayerFromSave(CurrentSaveGame->PlayerSaveInfo);
 }
