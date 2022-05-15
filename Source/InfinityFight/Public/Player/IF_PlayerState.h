@@ -18,5 +18,5 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "Treasures")
 	FORCEINLINE int32 GetTreasures() const { return TreasuresAmount; }
 
-	void ChangeTreasures(const int32 Delta);
+	void AddTreasures(const int32 Delta);
 };

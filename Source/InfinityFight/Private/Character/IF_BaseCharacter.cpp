@@ -45,7 +45,7 @@ void AIF_BaseCharacter::SetMaxHealth(const float NewMaxHealth)
 float AIF_BaseCharacter::TakeDamage(float DamageAmount, FDamageEvent const& DamageEvent, AController* EventInstigator, AActor* DamageCauser)
 {
 	const float TempDamage = Super::TakeDamage(DamageAmount, DamageEvent, EventInstigator, DamageCauser);
-	ChangeHealth(-TempDamage);
+	AddHealth(-TempDamage);
 	DamageReact();
 	return TempDamage;
 }
@@ -71,7 +71,7 @@ void AIF_BaseCharacter::AttackEnd()
 	bPlayingCombatMontage = false;
 }
 
-void AIF_BaseCharacter::ChangeHealth(const float DeltaHealth)
+void AIF_BaseCharacter::AddHealth(const float DeltaHealth)
 {
 	Health = FMath::Clamp(Health + DeltaHealth, 0.f, MaxHealth);
 	if (Health <= 0)

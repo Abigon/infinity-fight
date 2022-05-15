@@ -216,7 +216,7 @@ void AIF_Character::Die()
 
 void AIF_Character::UseHealPotion(const float Value)
 {
-	ChangeHealth(Value);
+	AddHealth(Value);
 }
 
 void AIF_Character::AddTreasures(const int32 Value)
@@ -224,7 +224,7 @@ void AIF_Character::AddTreasures(const int32 Value)
 	const auto PS = Cast<AIF_PlayerState>(GetPlayerState());
 	if (PS)
 	{
-		PS->ChangeTreasures(Value);
+		PS->AddTreasures(Value);
 	}
 }
 
@@ -232,7 +232,6 @@ FPlayerSaveInfo AIF_Character::GetPlayerSaveInfo() const
 {
 	FPlayerSaveInfo PlayerSaveInfo;
 
-	PlayerSaveInfo.Health = GetHealth();
 	PlayerSaveInfo.MaxHealth = MaxHealth;
 	PlayerSaveInfo.Transform = GetActorTransform();
 
@@ -240,7 +239,6 @@ FPlayerSaveInfo AIF_Character::GetPlayerSaveInfo() const
 	if (CM)
 	{
 		PlayerSaveInfo.MaxStamina = CM->GetMaxStamina();
-		PlayerSaveInfo.Stamina = CM->GetStamina();
 	}
 
 	const auto PS = Cast<AIF_PlayerState>(GetPlayerState());
@@ -255,12 +253,11 @@ void AIF_Character::UpdatePlayerFromSave(const FPlayerSaveInfo& PlayerSaveInfo)
 {
 	SetActorTransform(PlayerSaveInfo.Transform);
 	SetMaxHealth(PlayerSaveInfo.MaxHealth);
-	ChangeHealth(PlayerSaveInfo.Health - PlayerSaveInfo.MaxHealth);
 	AddTreasures(PlayerSaveInfo.Treasures);
 	const auto CM = Cast<UIF_CharacterMovementComponent>(GetMovementComponent());
 	if (CM)
 	{
-		CM->UpdateStaminaFromSave(PlayerSaveInfo.Stamina, PlayerSaveInfo.MaxStamina);
+		CM->SetMaxStamina(PlayerSaveInfo.MaxStamina);
 	}
 }
 

@@ -2,7 +2,7 @@
 
 #include "Player/IF_PlayerState.h"
 
-void AIF_PlayerState::ChangeTreasures(const int32 Delta)
+void AIF_PlayerState::AddTreasures(const int32 Delta)
 {
 	TreasuresAmount = FMath::Clamp(TreasuresAmount + Delta, 0, INT32_MAX);
 }

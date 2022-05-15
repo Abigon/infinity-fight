@@ -44,7 +44,6 @@ public:
 
 	float GetHealthPercent() const { return MaxHealth != 0 ? Health / MaxHealth : 0.f; }
 	FORCEINLINE bool IsDead() const { return FMath::IsNearlyZero(Health); }
-	FORCEINLINE float GetHealth() const { return Health; }
 
 	virtual void PlayImpactFX(const FVector& Location);
 
@@ -62,5 +61,5 @@ protected:
 	virtual void Die(){};
 	virtual void DamageReact();
 
-	void ChangeHealth(const float DeltaHealth);
+	void AddHealth(const float DeltaHealth);
 };

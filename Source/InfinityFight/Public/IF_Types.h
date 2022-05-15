@@ -46,11 +46,7 @@ struct FPlayerSaveInfo
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Save Game")
 	FTransform Transform;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Save Game")
-	float Health = 0;
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Save Game")
 	float MaxHealth = 0;
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Save Game")
-	float Stamina = 0;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Save Game")
 	float MaxStamina = 0;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Save Game")
