@@ -51,4 +51,6 @@ struct FPlayerSaveInfo
 	float MaxStamina = 0;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Save Game")
 	int32 Treasures = 0;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Save Game")
+	int32 TotalPoints = 0;
 };

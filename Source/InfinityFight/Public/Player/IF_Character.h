@@ -64,7 +64,7 @@ protected:
 	virtual void DeactivateAttackCollision() override;
 	virtual void PlaySwingSound() override;
 
-	virtual void Die() override;
+	virtual void Die(class AController* InstigatedBy) override;
 
 	UFUNCTION(BlueprintCallable, Category = "Test")
 	void Test();

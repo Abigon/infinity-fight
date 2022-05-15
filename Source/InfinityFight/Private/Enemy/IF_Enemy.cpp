@@ -9,6 +9,7 @@
 #include "GameFramework/CharacterMovementComponent.h"
 #include "Kismet/GameplayStatics.h"
 #include "Player/IF_Character.h"
+#include "Player/IF_PlayerState.h"
 
 AIF_Enemy::AIF_Enemy()
 {
@@ -206,7 +207,7 @@ void AIF_Enemy::DeactivateAttackCollision()
 	CombatLeftCollision->SetCollisionEnabled(ECollisionEnabled::NoCollision);
 }
 
-void AIF_Enemy::Die()
+void AIF_Enemy::Die(AController* InstigatedBy)
 {
 	GetWorldTimerManager().ClearAllTimersForObject(this);
 	StopAnimMontage();
@@ -215,6 +216,15 @@ void AIF_Enemy::Die()
 	DeactivateAttackCollision();
 	AgroSphere->SetCollisionEnabled(ECollisionEnabled::NoCollision);
 	AttackSphere->SetCollisionEnabled(ECollisionEnabled::NoCollision);
+
+	if (InstigatedBy)
+	{
+		const auto InstigatorPlayerState = InstigatedBy->GetPlayerState<AIF_PlayerState>();
+		if (InstigatorPlayerState)
+		{
+			InstigatorPlayerState->AddScore(PointsForDying);
+		}
+	}
 
 	SetLifeSpan(DeathDelay);
 }

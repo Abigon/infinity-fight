@@ -58,7 +58,7 @@ protected:
 	virtual void PlaySwingSound(){};
 
 	virtual void PlayAttackMontage();
-	virtual void Die(){};
+	virtual void Die(class AController* InstigatedBy){};
 	virtual void DamageReact();
 
 	void AddHealth(const float DeltaHealth);

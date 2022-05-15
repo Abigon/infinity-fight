@@ -204,7 +204,7 @@ void AIF_Character::DestroyWeapon()
 	}
 }
 
-void AIF_Character::Die()
+void AIF_Character::Die(AController* InstigatedBy)
 {
 	StopAnimMontage();
 	GetMesh()->SetRelativeLocation(FVector(0.f, 0.f, -88.f));
@@ -241,10 +241,11 @@ FPlayerSaveInfo AIF_Character::GetPlayerSaveInfo() const
 		PlayerSaveInfo.MaxStamina = CM->GetMaxStamina();
 	}
 
-	const auto PS = Cast<AIF_PlayerState>(GetPlayerState());
-	if (PS)
+	const auto MyPlayerState = GetPlayerState<AIF_PlayerState>();
+	if (MyPlayerState)
 	{
-		PlayerSaveInfo.Treasures = PS->GetTreasures();
+		PlayerSaveInfo.Treasures = MyPlayerState->GetTreasures();
+		PlayerSaveInfo.TotalPoints = MyPlayerState->GetTotalPoints();
 	}
 	return PlayerSaveInfo;
 }

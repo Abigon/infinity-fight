@@ -46,6 +46,10 @@ float AIF_BaseCharacter::TakeDamage(float DamageAmount, FDamageEvent const& Dama
 {
 	const float TempDamage = Super::TakeDamage(DamageAmount, DamageEvent, EventInstigator, DamageCauser);
 	AddHealth(-TempDamage);
+	if (IsDead())
+	{
+		Die(EventInstigator);
+	}
 	DamageReact();
 	return TempDamage;
 }
@@ -74,10 +78,6 @@ void AIF_BaseCharacter::AttackEnd()
 void AIF_BaseCharacter::AddHealth(const float DeltaHealth)
 {
 	Health = FMath::Clamp(Health + DeltaHealth, 0.f, MaxHealth);
-	if (Health <= 0)
-	{
-		Die();
-	}
 }
 
 void AIF_BaseCharacter::PlayImpactFX(const FVector& Location)

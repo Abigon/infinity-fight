@@ -51,6 +51,8 @@ private:
 	FTimerHandle BackToStartTimer;
 	FTimerHandle AttackTimer;
 
+	int32 PointsForDying = 100;
+
 public:
 	AIF_Enemy();
 	virtual void Tick(float DeltaSeconds) override;
@@ -66,7 +68,7 @@ protected:
 	virtual void ActivateAttack2Collision() override;
 	virtual void DeactivateAttackCollision() override;
 
-	virtual void Die() override;
+	virtual void Die(class AController* InstigatedBy) override;
 
 private:
 	void Attack();
